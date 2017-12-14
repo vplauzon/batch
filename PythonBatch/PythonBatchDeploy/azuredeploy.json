@@ -24,7 +24,7 @@
       "kind": "Storage"
     },
     {
-      "apiVersion": "2015-12-01",
+      "apiVersion": "2017-09-01",
       "type": "Microsoft.Batch/batchAccounts",
       "name": "[parameters('Batch Account Name')]",
       "location": "[resourceGroup().location]",
@@ -34,8 +34,31 @@
       "properties": {
         "autoStorage": {
           "storageAccountId": "[resourceId('Microsoft.Storage/storageAccounts', parameters('Storage Account Name'))]"
+        },
+        "poolAllocationMode": "BatchService"
+      },
+      "resources": [
+        {
+          "apiVersion": "2017-09-01",
+          "type": "applications",
+          "name": "scriptApp",
+          "dependsOn": [
+            "[resourceId('Microsoft.Batch/batchAccounts', parameters('Batch Account Name'))]"
+          ],
+          "allowUpdates": true,
+          "displayName": "Script App",
+          "resources": [
+            {
+              "apiVersion": "2017-09-01",
+              "type": "versions",
+              "name": "1.0",
+              "dependsOn": [
+                "[resourceId('Microsoft.Batch/batchAccounts/applications', concat(parameters('Batch Account Name'), '/scriptApp'))]"
+              ]
+            }
+          ]
         }
-      }
+      ]
     }
   ],
   "outputs": {}
