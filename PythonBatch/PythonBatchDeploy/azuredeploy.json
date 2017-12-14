@@ -1,8 +1,42 @@
 {
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
-  "parameters": {},
-  "variables": {},
-  "resources": [],
+  "parameters": {
+    "Storage Account Name": {
+      "type": "string"
+    },
+    "Batch Account Name": {
+      "type": "string"
+    }
+  },
+  "variables": {
+  },
+  "resources": [
+    {
+      "apiVersion": "2016-01-01",
+      "type": "Microsoft.Storage/storageAccounts",
+      "name": "[parameters('Storage Account Name')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [],
+      "sku": {
+        "name": "Standard_LRS"
+      },
+      "kind": "Storage"
+    },
+    {
+      "apiVersion": "2015-12-01",
+      "type": "Microsoft.Batch/batchAccounts",
+      "name": "[parameters('Batch Account Name')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Storage/storageAccounts', parameters('Storage Account Name'))]"
+      ],
+      "properties": {
+        "autoStorage": {
+          "storageAccountId": "[resourceId('Microsoft.Storage/storageAccounts', parameters('Storage Account Name'))]"
+        }
+      }
+    }
+  ],
   "outputs": {}
 }
