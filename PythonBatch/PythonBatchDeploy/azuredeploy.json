@@ -82,6 +82,7 @@
             "scaleSettings": "[variables('Fixed Scale Setting')]"
           }
         }
+        //,
         //{
         //  "apiVersion": "2017-09-01",
         //  "type": "applications",
