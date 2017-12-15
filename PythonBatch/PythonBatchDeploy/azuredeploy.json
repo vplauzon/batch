@@ -7,9 +7,34 @@
     },
     "Batch Account Name": {
       "type": "string"
+    },
+    "VM Size": {
+      "type": "string",
+      "defaultValue": "Standard_DS2_v2",
+      "allowedValues": [
+        "Standard_DS1_v2",
+        "Standard_DS2_v2",
+        "Standard_DS3_v2",
+        "Standard_DS4_v2",
+        "Standard_DS5_v2"
+      ]
     }
   },
   "variables": {
+    "Image Reference": {
+      "publisher": "OpenLogic",
+      "offer": "CentOS",
+      "sku": "7.3",
+      "version": "latest"
+    },
+    "nodeAgentSkuId": "batch.node.centos 7",
+    "Fixed Scale Setting": {
+      "fixedScale": {
+        "resizeTimeout": "0:10:00",
+        "targetDedicatedNodes": 0,
+        "targetLowPriorityNodes": 1
+      }
+    }
   },
   "resources": [
     {
@@ -40,23 +65,22 @@
       "resources": [
         {
           "apiVersion": "2017-09-01",
-          "type": "applications",
-          "name": "scriptApp",
+          "type": "pools",
+          "name": "mainPool",
           "dependsOn": [
             "[resourceId('Microsoft.Batch/batchAccounts', parameters('Batch Account Name'))]"
           ],
-          "allowUpdates": true,
-          "displayName": "Script App",
-          "resources": [
-            {
-              "apiVersion": "2017-09-01",
-              "type": "versions",
-              "name": "1.0",
-              "dependsOn": [
-                "[resourceId('Microsoft.Batch/batchAccounts/applications', concat(parameters('Batch Account Name'), '/scriptApp'))]"
-              ]
-            }
-          ]
+          "properties": {
+            "displayName": "Main Pool",
+            "vmSize": "[parameters('VM Size')]",
+            "deploymentConfiguration": {
+              "virtualMachineConfiguration": {
+                "imageReference": "[variables('Image Reference')]",
+                "nodeAgentSkuId": "[variables('nodeAgentSkuId')]"
+              }
+            },
+            "scaleSettings": "[variables('Fixed Scale Setting')]"
+          }
         }
       ]
     }
