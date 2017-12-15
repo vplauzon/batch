@@ -30,7 +30,7 @@
     "nodeAgentSkuId": "batch.node.centos 7",
     "Fixed Scale Setting": {
       "fixedScale": {
-        //"resizeTimeout": "15",
+        "resizeTimeout": "0:10:00",
         "targetDedicatedNodes": 0,
         "targetLowPriorityNodes": 1
       }
@@ -82,27 +82,6 @@
             "scaleSettings": "[variables('Fixed Scale Setting')]"
           }
         }
-        //,
-        //{
-        //  "apiVersion": "2017-09-01",
-        //  "type": "applications",
-        //  "name": "scriptApp",
-        //  "dependsOn": [
-        //    "[resourceId('Microsoft.Batch/batchAccounts', parameters('Batch Account Name'))]"
-        //  ],
-        //  "allowUpdates": true,
-        //  "displayName": "Script App",
-        //  "resources": [
-        //    {
-        //      "apiVersion": "2017-09-01",
-        //      "type": "versions",
-        //      "name": "1.0",
-        //      "dependsOn": [
-        //        "[resourceId('Microsoft.Batch/batchAccounts/applications', concat(parameters('Batch Account Name'), '/scriptApp'))]"
-        //      ]
-        //    }
-        //  ]
-        //}
       ]
     }
   ],
