@@ -30,7 +30,7 @@
     "nodeAgentSkuId": "batch.node.centos 7",
     "Fixed Scale Setting": {
       "fixedScale": {
-        "resizeTimeout": "0:10:00",
+        "resizeTimeout": "P10M",
         "targetDedicatedNodes": 0,
         "targetLowPriorityNodes": 1
       }
