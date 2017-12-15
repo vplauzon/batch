@@ -71,7 +71,6 @@
             "[resourceId('Microsoft.Batch/batchAccounts', parameters('Batch Account Name'))]"
           ],
           "properties": {
-            "displayName": "Main Pool",
             "vmSize": "[parameters('VM Size')]",
             "deploymentConfiguration": {
               "virtualMachineConfiguration": {
