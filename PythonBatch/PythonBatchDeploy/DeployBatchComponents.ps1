@@ -7,11 +7,15 @@
 $rg = "PythonBatch"
 #  Name of the batch account as specified when running the ARM template
 $batchAccount = "vplbatch"
+#  Name of the storage account as specified when running the ARM template
+$storageAccount = "vplbatchsto"
 
 ###  Those variable values do not need to be changed
 $appID = "PythonScript"
 $packageUrl = "https://github.com/vplauzon/batch/raw/master/PythonBatch/PythonBatchDeploy/AppPackages/Sample.zip"
 $appVersion = "1.0"
+
+###  Configure Batch account
 
 #  Create the batch application
 New-AzureRmBatchApplication -ResourceGroupName $rg -AccountName $batchAccount -ApplicationId $appID
@@ -32,3 +36,9 @@ rm Sample.zip
 
 #  Remove-AzureRmBatchApplicationPackage -ResourceGroupName $rg -AccountName $batchAccount -ApplicationId $appID -ApplicationVersion $appVersion
 #  Remove-AzureRmBatchApplication -ResourceGroupName $rg -AccountName $batchAccount -ApplicationId $appID
+
+###  Configure Storage account
+
+$keys = Get-AzureRmStorageAccountKey -ResourceGroupName $rg -Name $storageAccount
+$context = New-AzureStorageContext -StorageAccountName $storageAccount -StorageAccountKey $keys.Value[0]
+New-AzureStorageContainer -Name test -Context $context
