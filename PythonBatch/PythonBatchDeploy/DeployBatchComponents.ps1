@@ -26,13 +26,17 @@ New-AzureStorageContainer -Name resources -Context $context
 #  Create a folder to copy resources locally
 mkdir tmp-resources
 
-#  Copy the package locally
-wget $packageUrl > tmp-resources/Sample.py
+#  Copy resources locally
+wget "https://github.com/vplauzon/batch/raw/master/PythonBatch/PythonBatchDeploy/Resources/sample.py" `
+    > tmp-resources/sample.py
+wget "https://github.com/vplauzon/batch/raw/master/PythonBatch/PythonBatchDeploy/Resources/setup-python.sh" `
+    > tmp-resources/setup-python.sh
 
-#  Copy
-Set-AzureStorageBlobContent -File `
-    "https://github.com/vplauzon/batch/raw/master/PythonBatch/PythonBatchDeploy/PythonScripts/Sample.py" `
-    -Container resources -Blob "mypath/sample.py" -BlobType Block -Force -Context $context
+#  Copy resources to blob storage
+Set-AzureStorageBlobContent -File "tmp-resources/sample.py" `
+    -Container resources -Blob "sample.py" -BlobType Block -Force -Context $context
+Set-AzureStorageBlobContent -File "tmp-resources/setup-python.sh" `
+    -Container resources -Blob "setup-python.py" -BlobType Block -Force -Context $context
 
 #  Clean temporary folder
 rmdir tmp-resources -Force -Recurse
