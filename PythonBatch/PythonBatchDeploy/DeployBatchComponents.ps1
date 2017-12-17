@@ -11,34 +11,31 @@ $batchAccount = "vplbatch"
 $storageAccount = "vplbatchsto"
 
 ###  Those variable values do not need to be changed
-$appID = "PythonScript"
-$packageUrl = "https://github.com/vplauzon/batch/raw/master/PythonBatch/PythonBatchDeploy/AppPackages/Sample.zip"
-$appVersion = "1.0"
 
 ###  Configure Batch account
 
-#  Create the batch application
-New-AzureRmBatchApplication -ResourceGroupName $rg -AccountName $batchAccount -ApplicationId $appID
-
-#  Copy the package locally
-wget $packageUrl > Sample.zip
-
-#  Upload the batch application package
-New-AzureRmBatchApplicationPackage -ResourceGroupName $rg -AccountName $batchAccount `
-    -ApplicationVersion $appVersion -ApplicationId $appID -Format zip -FilePath Sample.zip
-
-#  Set default version of the application
-Set-AzureRmBatchApplication -ResourceGroupName $rg -AccountName $batchAccount -ApplicationId $appID `
-    -DefaultVersion $appVersion
-
-#  Clean local copy of the package
-rm Sample.zip
-
-#  Remove-AzureRmBatchApplicationPackage -ResourceGroupName $rg -AccountName $batchAccount -ApplicationId $appID -ApplicationVersion $appVersion
-#  Remove-AzureRmBatchApplication -ResourceGroupName $rg -AccountName $batchAccount -ApplicationId $appID
-
 ###  Configure Storage account
 
+#  Fetch storage account access keys
 $keys = Get-AzureRmStorageAccountKey -ResourceGroupName $rg -Name $storageAccount
+#  Create a context for storage account commands
 $context = New-AzureStorageContext -StorageAccountName $storageAccount -StorageAccountKey $keys.Value[0]
-New-AzureStorageContainer -Name test -Context $context
+#  Create a container for resource files
+New-AzureStorageContainer -Name resources -Context $context
+
+#  Create a folder to copy resources locally
+mkdir tmp-resources
+
+#  Copy the package locally
+wget $packageUrl > tmp-resources/Sample.py
+
+#  Copy
+Set-AzureStorageBlobContent -File `
+    "https://github.com/vplauzon/batch/raw/master/PythonBatch/PythonBatchDeploy/PythonScripts/Sample.py" `
+    -Container resources -Blob "mypath/sample.py" -BlobType Block -Force -Context $context
+
+#  Clean temporary folder
+rmdir tmp-resources -Force -Recurse
+
+#  Create a container for data files
+New-AzureStorageContainer -Name data -Context $context

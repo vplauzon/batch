@@ -27,13 +27,13 @@
   <ItemGroup>
     <Content Include="azuredeploy.json" />
     <Content Include="azuredeploy.parameters.json" />
-    <None Include="AppPackages\Sample.zip" />
     <None Include="Deployment.targets">
       <Visible>False</Visible>
     </None>
     <Content Include="DeployBatchComponents.ps1" />
     <Content Include="Deploy-AzureResourceGroup.ps1" />
-    <None Include="PythonScripts\Sample.py" />
+    <None Include="Resources\setup-python.sh" />
+    <None Include="Resources\sample.py" />
   </ItemGroup>
   <Target Name="GetReferenceAssemblyPaths" />
 </Project>
