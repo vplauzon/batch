@@ -36,7 +36,7 @@ wget "https://github.com/vplauzon/batch/raw/master/PythonBatch/PythonBatchDeploy
 Set-AzureStorageBlobContent -File "tmp-resources/sample.py" `
     -Container resources -Blob "sample.py" -BlobType Block -Force -Context $context
 Set-AzureStorageBlobContent -File "tmp-resources/setup-python.sh" `
-    -Container resources -Blob "setup-python.py" -BlobType Block -Force -Context $context
+    -Container resources -Blob "setup-python.sh" -BlobType Block -Force -Context $context
 
 #  Clean temporary folder
 rmdir tmp-resources -Force -Recurse
