@@ -4,11 +4,11 @@
 ###  Replace the following variable values with yours
 
 #  Resource group name where the batch account is deployed
-$rg = "PythonBatch"
+$rg = "PythonBatch-2"
 #  Name of the batch account as specified when running the ARM template
-$batchAccount = "vplbatch"
+$batchAccount = "vplbatch2"
 #  Name of the storage account as specified when running the ARM template
-$storageAccount = "vplbatchsto"
+$storageAccount = "vplbatchsto2"
 
 ###  Those variable values do not need to be changed
 $pythonAppID = "PythonScript"
@@ -50,16 +50,6 @@ Set-AzureRmBatchApplication -ResourceGroupName $rg -AccountName $batchAccount -A
     -DefaultVersion $pythonAppVersion
 Set-AzureRmBatchApplication -ResourceGroupName $rg -AccountName $batchAccount -ApplicationId $setupAppID `
     -DefaultVersion $setupAppVersion
-
-###  Configure Storage account
-
-#  Fetch storage account access keys
-$keys = Get-AzureRmStorageAccountKey -ResourceGroupName $rg -Name $storageAccount
-#  Create a context for storage account commands
-$context = New-AzureStorageContext -StorageAccountName $storageAccount -StorageAccountKey $keys.Value[0]
-
-#  Create a container for data files
-New-AzureStorageContainer -Name data -Context $context
 
 ###  Clean temporary folder
 rmdir tmp-resources -Force -Recurse
