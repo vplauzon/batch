@@ -9,6 +9,5 @@ Sample code to run Python scripts with Azure Batch.
     <img src="http://armviz.io/visualizebutton.png"/>
 </a>
 
-A PowerShell script needs to be run after the ARM template then some Azure Portal manipulation.
-
-The procedure is described in [this article](http://vincentlauzon.com/2017/12/18/recurrent-server…with-azure-batch/).
+A PowerShell script needs to be run after the ARM template then some Azure Portal manipulation.  The procedure is described
+in [this article](http://vincentlauzon.com/2017/12/18/recurrent-server…with-azure-batch/).
