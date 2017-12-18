@@ -1,1 +1,1 @@
-pip install azure-storage
+pip install azure-storage-blob
