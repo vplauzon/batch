@@ -34,6 +34,12 @@
         "targetDedicatedNodes": 0,
         "targetLowPriorityNodes": 1
       }
+    },
+    "Auto Scale Setting": {
+      "autoScale": {
+        "formula": "pendingTaskSamplePercent = $PendingTasks.GetSamplePercent(180 * TimeInterval_Second);$TargetLowPriorityNodes = pendingTaskSamplePercent>0 ? 1 : 0;",
+        "evaluationInterval": "PT5M"
+      }
     }
   },
   "resources": [
@@ -78,7 +84,7 @@
                 "nodeAgentSkuId": "[variables('nodeAgentSkuId')]"
               }
             },
-            "scaleSettings": "[variables('Fixed Scale Setting')]"
+            "scaleSettings": "[variables('Auto Scale Setting')]"
           }
         }
       ]

@@ -3,10 +3,10 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "Storage Account Name": {
-      "value": "vplbatchsto"
+      "value": "vplbatchsto2"
     },
     "Batch Account Name": {
-      "value": "vplbatch"
+      "value": "vplbatch2"
     }
   }
 }
