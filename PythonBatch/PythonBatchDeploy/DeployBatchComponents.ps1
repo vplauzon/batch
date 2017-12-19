@@ -20,16 +20,16 @@ $setupAppVersion = "1.0"
 mkdir tmp-resources
 
 #  Copy resources locally
-wget "https://github.com/vplauzon/batch/raw/master/PythonBatch/PythonBatchDeploy/Resources/sample.py" `
+(wget "https://github.com/vplauzon/batch/raw/master/PythonBatch/PythonBatchDeploy/Resources/sample.py").Content `
     > tmp-resources/sample.py
-wget "https://github.com/vplauzon/batch/raw/master/PythonBatch/PythonBatchDeploy/Resources/setup-python.sh" `
+(wget "https://github.com/vplauzon/batch/raw/master/PythonBatch/PythonBatchDeploy/Resources/setup-python.sh").Content `
     > tmp-resources/setup-python.sh
 
 #  Build an archive for each resource separately
 Compress-Archive -Path "tmp-resources\sample.py" -DestinationPath "tmp-resources/sample.zip" `
-    -CompressionLevel Optimal
+    -CompressionLevel NoCompression
 Compress-Archive -Path "tmp-resources\setup-python.sh" -DestinationPath "tmp-resources/setup-python.zip" `
-    -CompressionLevel Optimal
+    -CompressionLevel NoCompression
 
 ###  Configure Batch account
 

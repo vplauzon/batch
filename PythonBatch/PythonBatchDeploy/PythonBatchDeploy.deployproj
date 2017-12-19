@@ -32,8 +32,10 @@
     </None>
     <Content Include="DeployBatchComponents.ps1" />
     <Content Include="Deploy-AzureResourceGroup.ps1" />
+    <None Include="Resources\sample.zip" />
     <None Include="Resources\setup-python.sh" />
     <None Include="Resources\sample.py" />
+    <None Include="Resources\setup-python.zip" />
   </ItemGroup>
   <Target Name="GetReferenceAssemblyPaths" />
 </Project>
